@@ -1,25 +1,12 @@
 jQuery(document).ready(function($) {
-	let modalShown = false;
 	const $overlay = $('#kyc-modal-overlay');
+	const $triggerBtn = $('#kyc-trigger-btn');
 
-	function showModal() {
-		if (!modalShown && $overlay.length) {
-			$overlay.fadeIn();
-			modalShown = true;
-		}
-	}
-
-	// 1. Show after 5 seconds
-	if ($overlay.length) {
-		setTimeout(showModal, 5000);
-
-		// 2. Or on exit intent (mouse leaves window)
-		$(document).on('mouseleave', function(e) {
-			if (e.clientY < 0) {
-				showModal();
-			}
-		});
-	}
+	// Open modal on floating button click
+	$triggerBtn.on('click', function(e) {
+        e.preventDefault();
+		$overlay.fadeIn();
+	});
 
 	// Close modal
 	$('.kyc-modal-close').on('click', function() {
@@ -33,13 +20,13 @@ jQuery(document).ready(function($) {
 		}
 	});
 
-	// Form Submission
-	$('#kyc-form').on('submit', function(e) {
+	// Form Submission (handles both popup and full form)
+	$('.kyc-form').on('submit', function(e) {
 		e.preventDefault();
 		
 		const $form = $(this);
 		const $msg = $form.find('.kyc-msg');
-		const $btn = $form.find('.kyc-submit-btn');
+		const $btn = $form.find('button[type="submit"]');
 
 		$btn.prop('disabled', true).text('Submitting...');
 		$msg.removeClass('success error').hide().text('');
@@ -55,11 +42,13 @@ jQuery(document).ready(function($) {
 			success: function(response) {
 				if (response.success) {
 					$msg.addClass('success').text(response.data.message).show();
-					$form[0].reset();
-					// Optional: hide modal after success
-					setTimeout(function() {
-						$overlay.fadeOut();
-					}, 3000);
+					// Optional: hide modal after success if it's the popup
+					if ($form.attr('id') === 'kyc-popup-form') {
+                        setTimeout(function() {
+                            $overlay.fadeOut();
+                            $form[0].reset();
+                        }, 3000);
+                    }
 				} else {
 					$msg.addClass('error').text(response.data.message).show();
 				}
@@ -68,7 +57,7 @@ jQuery(document).ready(function($) {
 				$msg.addClass('error').text('An error occurred. Please try again.').show();
 			},
 			complete: function() {
-				$btn.prop('disabled', false).text('Submit');
+				$btn.prop('disabled', false).text($form.attr('id') === 'kyc-popup-form' ? 'Submit' : 'Save Profile');
 			}
 		});
 	});

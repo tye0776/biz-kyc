@@ -1,4 +1,34 @@
-/* KYC Modal Styles */
+/* KYC Styles */
+.kyc-floating-btn-wrap {
+	position: fixed;
+	z-index: 99998;
+}
+
+.kyc-floating-btn {
+	background-color: var(--kyc-main-color, #0073aa);
+	color: #fff;
+	border: none;
+	border-radius: 50px;
+	padding: 12px 20px;
+	font-size: 16px;
+	cursor: pointer;
+	box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	transition: background-color 0.3s;
+}
+
+.kyc-floating-btn:hover {
+	background-color: var(--kyc-accent-color, #005177);
+}
+
+.kyc-floating-btn .dashicons {
+	font-size: 20px;
+	width: 20px;
+	height: 20px;
+}
+
 .kyc-modal-overlay {
 	position: fixed;
 	top: 0;
@@ -41,10 +71,6 @@
 	line-height: 1;
 }
 
-.kyc-modal-close:hover {
-	color: #000;
-}
-
 .kyc-modal-content h3 {
 	margin-top: 0;
 	margin-bottom: 20px;
@@ -55,6 +81,15 @@
 
 .kyc-form-group {
 	margin-bottom: 15px;
+}
+
+.kyc-form-row {
+    display: flex;
+    gap: 15px;
+}
+
+.kyc-form-row .kyc-form-group {
+    flex: 1;
 }
 
 .kyc-form-group label {
@@ -68,7 +103,7 @@
 .kyc-form-group input[type="text"],
 .kyc-form-group input[type="tel"],
 .kyc-form-group input[type="email"],
-.kyc-form-group input[type="date"] {
+.kyc-form-group input[type="number"] {
 	width: 100%;
 	padding: 10px;
 	border: 1px solid #ccc;
@@ -92,17 +127,17 @@
 .kyc-submit-btn {
 	width: 100%;
 	padding: 12px;
-	background: #0073aa;
+	background-color: var(--kyc-main-color, #0073aa);
 	color: #fff;
 	border: none;
 	border-radius: 4px;
 	font-size: 16px;
 	cursor: pointer;
-	transition: background 0.2s;
+	transition: background-color 0.2s;
 }
 
 .kyc-submit-btn:hover {
-	background: #005177;
+	background-color: var(--kyc-accent-color, #005177);
 }
 
 .kyc-full-link-wrap {
@@ -111,7 +146,7 @@
 }
 
 .kyc-full-link {
-	color: #0073aa;
+	color: var(--kyc-main-color, #0073aa);
 	text-decoration: none;
 	font-size: 14px;
 }
@@ -140,4 +175,20 @@
 	color: #721c24;
 	border: 1px solid #f5c6cb;
 	display: block;
+}
+
+.kyc-full-profile-wrap {
+    background: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+@media (max-width: 600px) {
+    .kyc-form-row {
+        flex-direction: column;
+        gap: 0;
+    }
 }

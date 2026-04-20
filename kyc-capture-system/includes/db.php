@@ -22,7 +22,7 @@ function kyc_create_table() {
 		last_name varchar(100) DEFAULT '' NOT NULL,
 		phone_number varchar(20) NOT NULL,
 		email varchar(100) DEFAULT '' NOT NULL,
-		date_of_birth date NOT NULL,
+		date_of_birth date DEFAULT NULL,
 		gender varchar(20) DEFAULT '' NOT NULL,
 		consent tinyint(1) NOT NULL,
 		date_added datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,

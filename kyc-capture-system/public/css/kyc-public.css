@@ -1,0 +1,283 @@
+/* KYC Public Styles */
+.kyc-floating-btn-wrap {
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	z-index: 999998;
+}
+
+.kyc-floating-btn {
+	background-color: var(--kyc-main-color, #0073aa);
+	color: #fff;
+	border: none;
+	border-radius: 50px;
+	padding: 12px 24px;
+	font-size: 16px;
+	cursor: pointer;
+	box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+	transition: opacity 0.3s, transform 0.3s;
+}
+
+.kyc-floating-btn:hover {
+	opacity: 0.9;
+	transform: translateY(-2px);
+}
+
+.kyc-modal-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background: rgba(0, 0, 0, 0.6);
+	z-index: 999999;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.kyc-modal {
+	background: #fff;
+	width: 90%;
+	max-width: 400px;
+	border-radius: 8px;
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+	position: relative;
+	padding: 24px;
+	box-sizing: border-box;
+	animation: kycFadeIn 0.3s ease-out;
+}
+
+@keyframes kycFadeIn {
+	from { opacity: 0; transform: translateY(-20px); }
+	to { opacity: 1; transform: translateY(0); }
+}
+
+.kyc-modal-close {
+	position: absolute;
+	top: 10px;
+	right: 15px;
+	background: none;
+	border: none;
+	font-size: 24px;
+	cursor: pointer;
+	color: #666;
+}
+
+.kyc-modal-content h3 {
+	margin-top: 0;
+	margin-bottom: 20px;
+	text-align: center;
+	font-size: 20px;
+	color: #333;
+}
+
+.kyc-form-group {
+	margin-bottom: 15px;
+}
+
+.kyc-form-group label {
+	display: block;
+	margin-bottom: 5px;
+	font-weight: 500;
+	color: #444;
+	font-size: 14px;
+}
+
+.kyc-form-group input[type="text"],
+.kyc-form-group input[type="tel"],
+.kyc-form-group input[type="email"] {
+	width: 100%;
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+	font-size: 14px;
+}
+
+.kyc-submit-btn {
+	width: 100%;
+	padding: 12px;
+	background-color: var(--kyc-main-color, #0073aa);
+	color: #fff;
+	border: none;
+	border-radius: 4px;
+	font-size: 16px;
+	cursor: pointer;
+	transition: opacity 0.2s;
+}
+
+.kyc-submit-btn:hover {
+	opacity: 0.9;
+}
+
+.kyc-msg {
+	margin-bottom: 15px;
+	padding: 10px;
+	border-radius: 4px;
+	font-size: 14px;
+	display: none;
+}
+
+.kyc-msg.success {
+	background: #d4edda;
+	color: #155724;
+	border: 1px solid #c3e6cb;
+	display: block;
+}
+
+.kyc-msg.error {
+	background: #f8d7da;
+	color: #721c24;
+	border: 1px solid #f5c6cb;
+	display: block;
+}
+
+.kyc-full-profile-wrap {
+	background: #fff;
+	padding: 30px;
+	border-radius: 8px;
+	box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+	max-width: 500px;
+	margin: 0 auto;
+}
+
+/* ---- My Family & Reminders section ---- */
+.kyc-family-section {
+	margin-top: 36px;
+	padding-top: 24px;
+	border-top: 2px solid #f0f0f1;
+}
+
+.kyc-family-section h3 {
+	font-size: 18px;
+	margin-bottom: 8px;
+	color: #333;
+}
+
+.kyc-family-section p {
+	font-size: 14px;
+	color: #666;
+	margin-bottom: 16px;
+}
+
+#kyc-add-contact-btn {
+	width: auto;
+	padding: 10px 20px;
+	font-size: 14px;
+}
+
+.kyc-contacts-table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 8px;
+	font-size: 13px;
+}
+
+.kyc-contacts-table th,
+.kyc-contacts-table td {
+	padding: 8px 10px;
+	border: 1px solid #e0e0e0;
+	text-align: left;
+	vertical-align: middle;
+}
+
+.kyc-contacts-table thead th {
+	background: #f7f7f8;
+	font-weight: 600;
+	color: #555;
+}
+
+.kyc-contacts-table tbody tr:nth-child(even) {
+	background: #fafafa;
+}
+
+.kyc-mutual-badge {
+	display: inline-block;
+	background: #d4edda;
+	color: #155724;
+	border-radius: 12px;
+	padding: 2px 8px;
+	font-size: 12px;
+	font-weight: 600;
+}
+
+.kyc-pending-badge {
+	display: inline-block;
+	background: #fff3cd;
+	color: #856404;
+	border-radius: 12px;
+	padding: 2px 8px;
+	font-size: 12px;
+	font-weight: 600;
+}
+
+.kyc-form-group input[type="date"] {
+	width: 100%;
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+	font-size: 14px;
+}
+
+/* Wider modal for contact form */
+#kyc-contact-modal-overlay .kyc-modal {
+	max-width: 480px;
+}
+
+/* ---- GDPR Consent ---- */
+.kyc-consent-group {
+	margin-top: 8px;
+	margin-bottom: 16px;
+}
+
+.kyc-consent-label {
+	display: flex;
+	align-items: flex-start;
+	gap: 8px;
+	font-size: 13px;
+	color: #555;
+	cursor: pointer;
+	font-weight: normal;
+}
+
+.kyc-consent-label input[type="checkbox"] {
+	margin-top: 2px;
+	flex-shrink: 0;
+	width: auto;
+}
+
+.kyc-consent-label a {
+	color: var(--kyc-main-color, #0073aa);
+}
+
+.kyc-gdpr-note {
+	margin-top: 12px;
+	color: #888;
+	font-size: 12px;
+	text-align: center;
+}
+
+@media (max-width: 600px) {
+	.kyc-contacts-table thead {
+		display: none;
+	}
+	.kyc-contacts-table,
+	.kyc-contacts-table tbody,
+	.kyc-contacts-table tr,
+	.kyc-contacts-table td {
+		display: block;
+		width: 100%;
+	}
+	.kyc-contacts-table td {
+		padding: 6px 10px;
+		border-bottom: none;
+	}
+	.kyc-contacts-table tr {
+		border: 1px solid #e0e0e0;
+		margin-bottom: 10px;
+		border-radius: 6px;
+	}
+}
+

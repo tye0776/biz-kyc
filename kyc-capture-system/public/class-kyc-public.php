@@ -133,6 +133,10 @@ class KYC_Public {
 	}
 
 	public function render_shortcode() {
+		if ( ! defined( 'DONOTCACHEPAGE' ) ) {
+			define( 'DONOTCACHEPAGE', true );
+		}
+
 		$cookie_name = 'kyc_user_session';
 		$customer = null;
 

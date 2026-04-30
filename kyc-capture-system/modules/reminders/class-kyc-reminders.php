@@ -40,16 +40,26 @@ class KYC_Reminders {
 		$today           = new DateTime( 'today', wp_timezone() );
 
 		// 1. Remind about customers' own birthdays (always, just needs dob column)
-		$customers = $wpdb->get_results(
-			"SELECT id, first_name, last_name, phone, email, dob FROM $customers_table
-			 WHERE dob IS NOT NULL AND dob != '0000-00-00'",
-			ARRAY_A
-		);
-		foreach ( (array) $customers as $c ) {
-			$days = self::days_until( $c['dob'], $today );
-			if ( $days !== false && $days <= $lead_days ) {
-				self::send_self_reminder( $c, $days );
+		$offset = 0;
+		$limit  = 500;
+		while ( true ) {
+			$customers = $wpdb->get_results(
+				$wpdb->prepare(
+					"SELECT id, first_name, last_name, phone, email, dob FROM $customers_table
+					 WHERE dob IS NOT NULL AND dob != '0000-00-00' LIMIT %d OFFSET %d",
+					$limit, $offset
+				),
+				ARRAY_A
+			);
+			if ( empty( $customers ) ) break;
+			
+			foreach ( (array) $customers as $c ) {
+				$days = self::days_until( $c['dob'], $today );
+				if ( $days !== false && $days <= $lead_days ) {
+					self::send_self_reminder( $c, $days );
+				}
 			}
+			$offset += $limit;
 		}
 
 		// 2. Remind about linked contacts — only if family_graph module is active & table exists
@@ -58,22 +68,33 @@ class KYC_Reminders {
 			if ( $wpdb->get_var( "SHOW TABLES LIKE '$contacts_table'" ) !== $contacts_table ) {
 				return;
 			}
-			$contacts = $wpdb->get_results(
-				"SELECT lc.*, c.first_name AS owner_first, c.last_name AS owner_last,
-				        c.phone AS owner_phone, c.email AS owner_email
-				 FROM $contacts_table AS lc
-				 INNER JOIN $customers_table AS c ON c.id = lc.customer_id
-				 WHERE lc.dob IS NOT NULL OR lc.anniversary IS NOT NULL",
-				ARRAY_A
-			);
-			foreach ( (array) $contacts as $contact ) {
-				foreach ( array( 'dob' => 'Birthday', 'anniversary' => 'Anniversary' ) as $field => $label ) {
-					if ( empty( $contact[ $field ] ) ) continue;
-					$days = self::days_until( $contact[ $field ], $today );
-					if ( $days !== false && $days <= $lead_days ) {
-						self::send_linked_reminder( $contact, $label, $contact[ $field ], $days );
+			$offset = 0;
+			$limit  = 500;
+			while ( true ) {
+				$contacts = $wpdb->get_results(
+					$wpdb->prepare(
+						"SELECT lc.*, c.first_name AS owner_first, c.last_name AS owner_last,
+						        c.phone AS owner_phone, c.email AS owner_email
+						 FROM $contacts_table AS lc
+						 INNER JOIN $customers_table AS c ON c.id = lc.customer_id
+						 WHERE lc.dob IS NOT NULL OR lc.anniversary IS NOT NULL
+						 LIMIT %d OFFSET %d",
+						$limit, $offset
+					),
+					ARRAY_A
+				);
+				if ( empty( $contacts ) ) break;
+				
+				foreach ( (array) $contacts as $contact ) {
+					foreach ( array( 'dob' => 'Birthday', 'anniversary' => 'Anniversary' ) as $field => $label ) {
+						if ( empty( $contact[ $field ] ) ) continue;
+						$days = self::days_until( $contact[ $field ], $today );
+						if ( $days !== false && $days <= $lead_days ) {
+							self::send_linked_reminder( $contact, $label, $contact[ $field ], $days );
+						}
 					}
 				}
+				$offset += $limit;
 			}
 		}
 	}
